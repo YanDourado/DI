@@ -1,0 +1,33 @@
+{
+	"name": "op4/di",
+	"description": "A PHP dependency injection container",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Yan Dourado",
+			"email": "douradoyan@hotmail.com"
+		}
+	],
+	"require": {},
+	"require-dev": {
+		"pestphp/pest": "dev-master",
+		"friendsofphp/php-cs-fixer": "dev-master",
+		"phpstan/phpstan": "^1.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"Op4\\DI\\": "src/"
+		}
+	},
+	"minimum-stability": "dev",
+	"scripts": {
+		"phpcs": "php-cs-fixer fix -v --verbose",
+		"phpstan": "phpstan analyse --ansi",
+		"pest": "pest --colors=always",
+		"test": [
+			"@phpcs",
+			"@phpstan",
+			"@pest"
+		]
+	}
+}
