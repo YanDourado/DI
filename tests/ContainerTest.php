@@ -16,6 +16,29 @@ test('Register a reference in Container', function () {
     expect($foo)->toBeInstanceOf(Foo::class);
 });
 
+test('Register a not shared reference in Container', function () {
+    $container = new Container();
+
+    $container->register(Foo::class);
+
+    $bar = $container->get(Bar::class);
+
+    expect($container->get(Foo::class) === $container->get(Foo::class))->toBeFalse();
+    expect($bar->foo === $container->get(Foo::class))->toBeFalse();
+});
+
+test('Register a shared reference in Container', function () {
+    $container = new Container();
+
+    $container->singleton(Foo::class);
+
+    $bar = $container->get(Bar::class);
+
+    expect($container->get(Foo::class) === $container->get(Foo::class))->toBeTrue();
+    expect($bar->foo === $container->get(Foo::class))->toBeTrue();
+
+});
+
 test('Register a reference with parameters in Container', function () {
     $container = new Container();
 
