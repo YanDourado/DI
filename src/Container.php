@@ -14,6 +14,11 @@ class Container implements ContainerInterface
 	 */
 	protected array $definitions;
 
+	/**
+	 * @var array<string, mixed>
+	 */
+	protected array $instances;
+
 	protected Resolver $resolver;
 
 	public function __construct()
@@ -31,12 +36,22 @@ class Container implements ContainerInterface
 			throw new NotFoundException(sprintf('Reference to "%s" not found!', $id));
 		}
 
-		return $this->resolver->resolve($this->definitions[$id]);
+		if (isset($this->instances[$id])) {
+			return $this->instances[$id];
+		}
+
+		$resolved = $this->resolver->resolve($this->definitions[$id]);
+
+		if ($this->isShared($id)) {
+			$this->instances[$id] = $resolved;
+		}
+
+		return $resolved;
 	}
 
 	public function has(string $id): bool
 	{
-		return isset($this->definitions[$id]);
+		return isset($this->definitions[$id]) || isset($this->instances[$id]);
 	}
 
 	public function register(string $id, object|string $concrete = null): Definition
@@ -44,5 +59,18 @@ class Container implements ContainerInterface
 		$concrete = $concrete ?? $id;
 
 		return $this->definitions[$id] = new Definition($concrete);
+	}
+
+	private function isShared(string $id): bool
+	{
+		return isset($this->instances[$id]) ||
+			(isset($this->definitions[$id]) && $this->definitions[$id]->isShared());
+	}
+
+	public function singleton(string $id, object|string $concrete = null): Definition
+	{
+		$concrete = $concrete ?? $id;
+
+		return $this->definitions[$id] = new Definition($concrete, true);
 	}
 }
