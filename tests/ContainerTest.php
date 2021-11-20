@@ -1,5 +1,61 @@
 <?php
 
-test('example', function () {
-	expect(true)->toBeTrue();
+namespace Op4\DI\Tests;
+
+use Op4\DI\Container;
+use Op4\DI\Tests\Classes\Bar;
+use Op4\DI\Tests\Classes\Foo;
+use Op4\DI\Tests\Classes\Person;
+
+test('Register a reference in Container', function () {
+    $container = new Container();
+
+    $container->register('foo', Foo::class);
+
+    $foo = $container->get('foo');
+    expect($foo)->toBeInstanceOf(Foo::class);
+});
+
+test('Register a reference with parameters in Container', function () {
+    $container = new Container();
+
+    $container->register('bar', Bar::class);
+
+    $container->register('person', Person::class)
+        ->addArgument('John Doe')
+        ->addArgument(100);
+
+    $bar = $container->get('bar');
+    $person = $container->get('person');
+
+    expect($bar)->toBeInstanceOf(Bar::class);
+    expect($bar->foo)->toBeInstanceOf(Foo::class);
+
+    expect($person)->toBeInstanceOf(Person::class)
+        ->toMatchObject([
+            'name'     => 'John Doe',
+            'age'      => 100,
+            'optional' => null,
+            'default'  => 'default'
+        ]);
+});
+
+test('Register a factory in Container', function () {
+    $container = new Container();
+
+    $container->register('foo', fn() => new Foo());
+
+    $foo = $container->get('foo');
+    expect($foo)->toBeInstanceOf(Foo::class);
+});
+
+test('Register a factory with parameters in Container', function () {
+    $container = new Container();
+
+    $container->register('bar', fn(Foo $foo) => new Bar($foo));
+
+    $bar = $container->get('bar');
+
+    expect($bar)->toBeInstanceOf(Bar::class);
+    expect($bar->foo)->toBeInstanceOf(Foo::class);
 });
