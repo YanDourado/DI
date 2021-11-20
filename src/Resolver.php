@@ -29,11 +29,18 @@ class Resolver
 	public function resolve(Definition $definition): mixed
 	{
 		$concrete = $definition->getConcrete();
-		return match (true) {
-			is_callable($concrete)                            => $this->resolveClosure($definition),
-			(is_string($concrete) && class_exists($concrete)) => $this->resolveClass($definition),
-			default                                           => throw new ContainerException('Fail to resolve the concrete')
+		$resolved = match (true) {
+			($definition->isResolved() && $definition->isShared()) => $definition->getResolved(),
+			is_callable($concrete)                                 => $this->resolveClosure($definition),
+			(is_string($concrete) && class_exists($concrete))      => $this->resolveClass($definition),
+			default                                                => throw new ContainerException('Fail to resolve the concrete')
 		};
+
+		if ($definition->isShared()) {
+			$definition->setResolved($resolved);
+		}
+
+		return $resolved;
 	}
 
 	/**
