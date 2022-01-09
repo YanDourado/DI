@@ -1,11 +1,11 @@
 <?php
 
-namespace Op4\DI\Tests;
+namespace YanDourado\DI\Tests;
 
-use Op4\DI\Definition;
-use Op4\DI\Exception\ContainerException;
-use Op4\DI\Resolver;
-use Op4\DI\Tests\Classes\AbstractClass;
+use YanDourado\DI\Definition;
+use YanDourado\DI\Exception\ContainerException;
+use YanDourado\DI\Resolver;
+use YanDourado\DI\Tests\Classes\AbstractClass;
 
 test('Expected exception if trying to resolve a abstract class', function () {
 

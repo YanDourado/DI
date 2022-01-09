@@ -1,6 +1,6 @@
 <?php
 
-namespace Op4\DI;
+namespace YanDourado\DI;
 
 class Definition
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Op4\DI\Tests;
+namespace YanDourado\DI\Tests;
 
-use Op4\DI\Container;
-use Op4\DI\Tests\Classes\Bar;
-use Op4\DI\Tests\Classes\Foo;
-use Op4\DI\Tests\Classes\Person;
+use YanDourado\DI\Container;
+use YanDourado\DI\Tests\Classes\Bar;
+use YanDourado\DI\Tests\Classes\Foo;
+use YanDourado\DI\Tests\Classes\Person;
 
 test('Register a reference in Container', function () {
     $container = new Container();

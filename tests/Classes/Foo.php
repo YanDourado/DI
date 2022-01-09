@@ -1,6 +1,6 @@
 <?php
 
-namespace Op4\DI\Tests\Classes;
+namespace YanDourado\DI\Tests\Classes;
 
 class Foo
 {

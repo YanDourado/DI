@@ -1,9 +1,9 @@
 <?php
 
-namespace Op4\DI;
+namespace YanDourado\DI;
 
-use Op4\DI\Exception\ContainerException;
-use Op4\DI\Exception\NotFoundException;
+use YanDourado\DI\Exception\ContainerException;
+use YanDourado\DI\Exception\NotFoundException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;

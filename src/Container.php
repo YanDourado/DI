@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Op4\DI;
+namespace YanDourado\DI;
 
-use Op4\DI\Exception\NotFoundException;
+use YanDourado\DI\Exception\NotFoundException;
 use Psr\Container\ContainerInterface;
 
 class Container implements ContainerInterface
